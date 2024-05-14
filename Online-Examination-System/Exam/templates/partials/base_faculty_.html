@@ -1,0 +1,89 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Portal Faculty</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+</head>
+
+  <style media="screen">
+    *{
+      color: #745959;
+    }
+    input[type=submit]:hover{
+            background-color: #87ff9b;
+    }
+
+     /* Custom styles for sidebar */
+     .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Initially collapsed */
+            bottom: 0;
+            z-index: 100;
+            width: 150px;
+            background-color: #343a40; /* Bootstrap dark background color */
+            color: #fff; /* Light text color */
+            transition: all 0.3s;
+        }
+
+        .sidebar .nav-link {
+            color: #fff;
+        }
+
+        .main-content {
+            margin-left: 0; /* Adjusted for collapsed sidebar */
+            transition: all 0.3s;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            top: 10px;
+            right: -40px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 250px;
+            }
+
+            .sidebar-toggle {
+                right: 10px;
+            }
+        }
+  </style>
+  <body>
+    <nav class="navbar navbar-light" style="background-color: rgb(87, 38, 235)">
+  <a href="{% url 'faculty-index' %}" style="color:white">Home</a>
+  <ul class="navbar-nav px-3" style="display:flex;flex-direction:row;align-items:center">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">{{request.user.username}}</a>
+    </li>
+  </ul>
+</nav>
+
+  
+
+
+      {% block body %}
+
+
+      {% endblock %}
+
+  
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+</html>

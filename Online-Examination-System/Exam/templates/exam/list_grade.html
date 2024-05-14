@@ -1,0 +1,41 @@
+<div class="music-player">
+    {% csrf_token %}
+    {%if art%}
+   <div class="cover">t
+    <a href="{{post.id}}"><video autoplay  controls autoplay loop poster="{{art.image.url}}" class="outer">
+       <source src="{{post.Aud.url}}">
+   </video></a>
+   <!--<img alt="" src="{{art.image.url}}"/>-->
+   </div>
+   <div class="titre">
+    <h3>
+    <!-- {{art.Artist}}-->
+    </h3>
+    <h1>{{art.title}}</h1>
+   </div>
+
+  <br />
+
+    <audio id="player">
+{% if not art.audio %}
+{% else %}
+      <source src="{{art.audio.url}}" type="audio/mp3"></audio>
+
+    <div>
+      <button type ="submit" style="height: 50px; width:100px; background-color:green; font-size: 20px; color: white;" onclick="document.getElementById('player').play()" ><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
+      </svg></button>
+
+      <button type ="btn btn-primary" style="height: 50px; width:100px; background-color:red; font-size: 20px; color: white;" o onclick="document.getElementById('player').pause()"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-pause-btn" viewBox="0 0 16 16">
+        <path d="M6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z"/>
+        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+      </svg></button>
+      <!--<button onclick="document.getElementById('player').volume += 0.1">Vol +</button>
+      <button onclick="document.getElementById('player').volume -= 0.1">Vol -</button> -->
+    </div>
+   </div>
+
+<!-- {{art.Data_info}}-->
+   {%endif%}
+  </div>

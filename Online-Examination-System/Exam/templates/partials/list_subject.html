@@ -1,0 +1,21 @@
+
+<!-- grade_subjects.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+ 	 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Subjects for Grade {{ grade.grade_name }}</title>
+</head>
+<body>
+    <h1>Subjects for Grade {{ grade.grade_name }}</h1>
+    <ul>
+        {% for subject in subjects %}
+            <li> <a href="{{subject.subject_name}}">{{ subject.subject_name }}</a></li>
+        {% empty %}
+            <li>No subjects found for this grade.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

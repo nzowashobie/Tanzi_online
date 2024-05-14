@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Topnav with sidebar</title>
+	<!-- Import bootstrap cdn -->
+	<link rel="stylesheet" href=
+"https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity=
+"sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+		crossorigin="anonymous">
+	<!-- Import jquery cdn -->
+	<script src=
+"https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity=
+"sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous">
+	</script>
+	<!-- Import popper.js cdn -->
+	<script src=
+"https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity=
+"sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous">
+	</script>
+	<!-- Import javascript cdn -->
+	<script src=
+"https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity=
+"sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+		crossorigin="anonymous">
+	</script>
+
+	</head>
+	<!-- CSS stylesheet -->
+	<style type="text/css">
+		html,
+		body {
+			height: 100%;
+		}
+
+		#green {
+			height: 100%;
+			background: black;
+			text-align: center;
+			color: white;
+			padding: 15px;
+		}
+   /* Custom CSS for responsive and resizable table */
+   .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            /* Prevent scroll bounce on iOS devices */
+        }
+
+        .table-responsive::-webkit-scrollbar {
+            width: 10px; /* Width of vertical scrollbar */
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb {
+            background-color: #888; /* Color of scrollbar thumb */
+            border-radius: 5px; /* Radius of scrollbar thumb */
+        }
+
+		/* Custom CSS for changing background color of table header */
+        .table thead th {
+            background-color: black; /* Blue color (change to your desired color) */
+            color: #fff; /* White text color for better contrast */
+        }
+*/
+      #form-button{
+
+       
+        left: 50%;
+     
+       
+        transform: translate(-50%, -50%);
+        border: 1px solid #666;
+      
+        position: fixed;
+      }
+
+	   /* Custom styles for sidebar */
+	   .sidebar {
+            background-color: #343a40; /* Bootstrap dark background color */
+            color: #fff; /* Light text color */
+            height: 100vh; /* Full height */
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            padding-top: 3.5rem; /* Adjust based on navbar height */
+            z-index: 1;
+            transition: all 0.3s;
+            width: 250px; /* Sidebar width */
+        }
+
+        .sidebar .nav-link {
+            color: #fff;
+        }
+
+        .main-content {
+            margin-left: 250px; /* Same as sidebar width */
+            transition: all 0.3s;
+            padding-top: rem; /* Adjust based on navbar height */
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+	</style>
+    <body>
+    <div class="container">
+        <h5> Exam Name  - {{ exam.name }}</h5>
+        <h5> Professor - {{ exam.professor }}</h5>
+        <h5> Paper Name  - {{ exam.question_paper.qPaperTitle }}</h5>
+        <h5>
+            This Exam is of  {{ exam.total_marks }} marks
+        </h5>
+        <h5>
+            <a>Time left : <a id="dmin">{{ min }}</a> mins <a id="dsec">{{ sec }}</a> seconds</a>
+        </h5>
+        <form method="POST" id="examform">
+            {% csrf_token %}
+            <ol>
+                {% for ques in question_list %}
+
+                <p>{{ ques.question | safe  }}</p>
+                <input type="radio" id="optionA" name="{{ ques.question }}" value="A">
+                <label for="optionA">{{ ques.optionA | safe}}</label><br>
+                <input type="radio" id="optionB" name="{{ ques.question  }}" value="B">
+                <label for="optionB">{{ ques.optionB | safe}}</label><br>
+                <input type="radio" id="optionC" name="{{ ques.question  }}" value="C">
+                <label for="optionC">{{ ques.optionC | safe}}</label><br>
+                <input type="radio" id="optionD" name="{{ ques.question }}" value="D">
+                <label for="optionD">{{ ques.optionD | safe }}</label><br>
+                {% endfor %}
+            </ol>
+            <input type="hidden" value="{{ qpaper.qPaperTitle}}" name="papertitle">
+            <input type="hidden" value="{{ exam }}" name="paper">
+            <input type="hidden" id="secs" value="{{ secs }}">
+            <input type="hidden" id="mins" value="{{ mins }}">
+            <input type="hidden" id="professorname" value="{{ exam.professor }}">
+            <input type="submit" value="Submit" id="PaperSubmit" onclick="submitFormOkay = true;" class = "btn" style="border-color:#745959; color:#745959;"/>
+        </form>
+        <script type="text/javascript">
+        count = 0;
+        $(document).ready(function() {
+            var hidden, visibilityState, visibilityChange;
+
+            if (typeof document.hidden !== "undefined") {
+                hidden = "hidden", visibilityChange = "visibilitychange", visibilityState = "visibilityState";
+            } else if (typeof document.msHidden !== "undefined") {
+                hidden = "msHidden", visibilityChange = "msvisibilitychange", visibilityState = "msVisibilityState";
+            }
+
+            var document_hidden = document[hidden];
+
+            document.addEventListener(visibilityChange, function() {
+                if(document_hidden != document[hidden]) {
+                if(document[hidden]) {
+                    count+=1;
+                    if(count == 5){
+                        console.log("DONE")
+                        mail()
+                    }
+                }
+                document_hidden = document[hidden];
+                }
+            });
+            });
+
+            function mail(){
+                var professorname = document.getElementById("professorname").value;
+                fetch(`/student/cheat/${professorname}`,{
+                    method:"GET",
+                    credentials: "same-origin",
+                    headers: {
+                        "X-CSRFToken": getCookie("csrftoken"),
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                })
+            }
+            
+        window.onbeforeunload = function() { return "Your work will be lost."; };
+        var milisec = 0;
+        var seconds = document.getElementById("secs").value;
+        var minutes = document.getElementById("mins").value
+        function display() {
+            if (minutes == 0 && seconds == 0) {
+                window.onbeforeunload = undefined
+                document.getElementById("examform").submit();
+            }
+            if (seconds == 0) {
+                minutes = minutes - 1
+                seconds = 60
+            }
+            seconds -= 1
+            document.getElementById("dsec").innerHTML = seconds
+            document.getElementById("dmin").innerHTML = minutes
+            setTimeout("display()", 1000)
+        }
+        display()
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+    </div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>

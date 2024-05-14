@@ -1,0 +1,243 @@
+{% extends "base_student.html" %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Page</title>
+    <!-- Bootstrap CSS -->
+   
+     <!-- Bootstrap CSS -->
+     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+     <!-- Font Awesome CSS for icons -->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+   
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add custom styles here */
+       
+    body{
+      background-color: #f5f5f5;
+    }
+
+    *{
+      color: #745959;
+    }
+
+    .card{
+      width: 10em;
+      height: 12em;
+      background-color: white;
+      display: flex;
+      align-items:center;
+      justify-content: center;
+      background-color: whitesmoke;
+    }
+    /*.container{
+	  padding-left: 5em;
+      display: grid;
+
+      grid-template-columns: 33.33% 33.33% auto;
+    }
+    .jumbotron{
+      padding-top: 5em;
+      padding-bottom: 15em;
+    }*/
+
+    .card p {
+      display: none;
+      color: black;
+    }
+    .card:hover h5{
+      display: none;
+      transition: all 0.3s ease;
+    }
+    .card:hover p {
+      display: flex;
+      text-align: center;
+      padding-left: 1em;
+      padding-right: 1em;
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateX(-0.5em);
+      transform: translateY(-0.5em);
+      box-shadow: 0.7em 0.7em 0.5em #d6d6d6;
+      transition: 0.3s ease;
+    }
+
+ /* Custom styles for sidebar */
+
+   .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Initially collapsed */
+            bottom: 0;
+            z-index: 100;
+            width: 150px;
+            background-color: #343a40; /* Bootstrap dark background color */
+            color: #fff; /* Light text color */
+            transition: all 0.3s;
+        }
+
+        .sidebar .nav-link {
+            color: #fff;
+        }
+
+        .sidebar .nav-link ul li{
+            color:white;
+        }
+
+        .main-content {
+            margin-left: 0; /* Adjusted for collapsed sidebar */
+            transition: all 0.3s;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            top: 10px;
+            right: -40px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 150px;
+            }
+
+            .sidebar-toggle {
+                right: 10px;
+            }
+        }
+        *{
+    color: #271c4d;
+        }
+        input[type=submit]:hover{
+          background: #a3d5ff;
+        }
+    </style>
+  
+</head>
+<body>
+ 
+  <div class="sidebar">
+    <nav class="nav flex-column">
+        <ul>
+            <li><a href="{% url 'index' %}">Dashboard</a></li>
+          </ul>
+          <li><i class="fas fa-file-alt"></i>  Exams</li>
+          <ul>
+            <li><a href="{% url 'view_exams' %}">Test Type</a></li>
+          </ul>
+          <li><i class="fas fa-clipboard-list"></i>  Summary</li>
+          <ul>
+            <li><a href="{% url 'view_students_attendance' %}">Attendance</a></li>
+            <li><a href="{% url 'student-previous' %}">Results and Previous Exams</a></li>
+          </ul>
+          <li><i class="fas fa-sliders-h"></i>  Settings and Actions </a></li>
+          <ul>
+            <li><a href="{% url 'email-student-pref' %}">General Settings</a></li>
+            <form id="my_form" action="{% url 'logout' %}" method="POST">
+                   {% csrf_token %}
+                  <li><a href="javascript:{}" onclick="document.getElementById('my_form').submit();">Logout</a></li>
+            </form>
+          </ul>
+    </nav>
+</div>
+<div class="main-content">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="toggleSidebar()">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                
+                
+                <ul>
+
+                    <li><a href="{% url 'index' %}">Dashboard</a></li>
+                  </ul>
+                  <li><i class="fas fa-file-alt"></i>  Exams</li>
+                  <ul>
+                    <li><a href="{% url 'view_exams' %}">Exams</a></li>
+                  </ul>
+                  <li><i class="fas fa-clipboard-list"></i>  Summary</li>
+                  <ul>
+                    <li><a href="{% url 'view_students_attendance' %}">Attendance</a></li>
+                    <li><a href="{% url 'student-previous' %}">Results and Previous Exams</a></li>
+                  </ul>
+                  <li><i class="fas fa-sliders-h"></i>  Settings and Actions </a></li>
+                  <ul>
+                    <li><a href="{% url 'email-student-pref' %}">General Settings</a></li>
+                    <form id="my_form" action="{% url 'logout' %}" method="POST">
+                           {% csrf_token %}
+                          <li><a href="javascript:{}" onclick="document.getElementById('my_form').submit();">Logout</a></li>
+                    </form>
+                  </ul>
+            
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        {% include 'partials/_messages.html' %}
+        
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Welcome to Tanzimark</h4>
+                <p>This is an online Platform page created for Teachers.</p>
+            </div>
+            <div class="col-md-4">
+               <!--- <img src="https://via.placeholder.com/400" class="img-fluid" alt="Responsive Image">-->
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4">
+               <!--<div class="distribute">-->
+                <a href="{% url 'view_exams_student' %}">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Exam</h5>
+                        <p class="card-text">This is the page where you can view your upcoming exams.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'student-previous' %}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Summary</h5>
+                        <p class="card-text">This is the page where you can view your Attendance and Results.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'email-student-pref' %}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Settings</h5>
+                        <p class="card-text">This is the page where you can change your Account Settings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+   
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ <script>
+     function toggleSidebar() {
+         document.querySelector('.sidebar').classList.toggle('active');
+     }
+ </script>
+  </body>
+</html>

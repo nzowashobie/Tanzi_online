@@ -1,0 +1,34 @@
+<!-- select_subject_grade.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+ 	 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Select Subject and Grade</title>
+</head>
+<body>
+    {% for post in grade %}
+    <div class="photo_gallery">
+       <!--<a href="player/{{post.id}}"><img src="{{post.image.url}}" alt="Mountains" style="width:100%">--> 
+ 
+      <!-- <a href="player/{{post.id}}"><img src="{{post.image.url}}" alt="Mountains" style="width:100%">-->
+       <a href="{{post.grade_name}}"><p>{{post.grade_name}}</p>
+</div>
+    {% endfor %}
+  </div>
+    
+<!-- select_grade.html -->
+
+<body>
+    <h1>Select Grade</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+
+</body>
+</html>

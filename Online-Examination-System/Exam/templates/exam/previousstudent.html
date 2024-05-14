@@ -1,0 +1,223 @@
+{% extends 'base_student.html' %}
+{% load static %}
+{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Topnav with sidebar</title>
+	<!-- Import bootstrap cdn -->
+	<link rel="stylesheet" href=
+"https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity=
+"sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+		crossorigin="anonymous">
+	<!-- Import jquery cdn -->
+	<script src=
+"https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity=
+"sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous">
+	</script>
+	<!-- Import popper.js cdn -->
+	<script src=
+"https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity=
+"sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous">
+	</script>
+	<!-- Import javascript cdn -->
+	<script src=
+"https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity=
+"sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+		crossorigin="anonymous">
+	</script>
+
+	</head>
+	<!-- CSS stylesheet -->
+	<style type="text/css">
+		html,
+		body {
+			height: 100%;
+		}
+
+		#green {
+			height: 100%;
+			background: black;
+			text-align: center;
+			color: white;
+			padding: 15px;
+		}
+   /* Custom CSS for responsive and resizable table */
+   .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            /* Prevent scroll bounce on iOS devices */
+        }
+
+        .table-responsive::-webkit-scrollbar {
+            width: 10px; /* Width of vertical scrollbar */
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb {
+            background-color: #888; /* Color of scrollbar thumb */
+            border-radius: 5px; /* Radius of scrollbar thumb */
+        }
+
+		/* Custom CSS for changing background color of table header */
+        .table thead th {
+            background-color: black; /* Blue color (change to your desired color) */
+            color: #fff; /* White text color for better contrast */
+        }
+*/
+      #form-button{
+
+       
+        left: 50%;
+     
+       
+        transform: translate(-50%, -50%);
+        border: 1px solid #666;
+      
+        position: fixed;
+      }
+
+	   /* Custom styles for sidebar */
+	   .sidebar {
+            background-color: #343a40; /* Bootstrap dark background color */
+            color: #fff; /* Light text color */
+            height: 100vh; /* Full height */
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            padding-top: 3.5rem; /* Adjust based on navbar height */
+            z-index: 1;
+            transition: all 0.3s;
+            width: 250px; /* Sidebar width */
+        }
+
+        .sidebar .nav-link {
+            color: #fff;
+        }
+
+        .main-content {
+            margin-left: 250px; /* Same as sidebar width */
+            transition: all 0.3s;
+            padding-top: rem; /* Adjust based on navbar height */
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+	</style>
+
+<body>
+	<div class="sidebar">
+        <nav class="nav flex-column">
+            <ul>
+                <li><a href="{% url 'index' %}">Dashboard</a></li>
+              </ul>
+              <li><i class="fas fa-file-alt"></i>  Exams</li>
+              <ul>
+                <li><a href="{% url 'view_exams' %}">Exams</a></li>
+              </ul>
+              <li><i class="fas fa-clipboard-list"></i>  Summary</li>
+              <ul>
+                <li><a href="{% url 'view_students_attendance' %}">Attendance</a></li>
+                <li><a href="{% url 'student-previous' %}">Results and Previous Exams</a></li>
+              </ul>
+              <li><i class="fas fa-sliders-h"></i>  Settings and Actions </a></li>
+              <ul>
+                <li><a href="{% url 'email-student-pref' %}">General Settings</a></li>
+                <form id="my_form" action="{% url 'logout' %}" method="POST">
+                       {% csrf_token %}
+                      <li><a href="javascript:{}" onclick="document.getElementById('my_form').submit();">Logout</a></li>
+                </form>
+              </ul>
+            </ul>  
+         </nav>
+    </div>
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="toggleSidebar()">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'select_grade' %}">Grade</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'view_exams' %}">Set Up</a>
+                        </li>
+                       
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Welcome to Tanzimark</h4>
+                    <p>This is built on an online education service.</p>
+                </div>
+            </div>
+           
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Card 1</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+        {% if completed %}
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+        <tr>
+                        <th scope="col">Exam Name</th>
+                        <th scope="col">Exam title</th>
+                        <th scope="col">Exam Professor</th>
+                        <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+            {% for exam in completed %}
+                    <tbody>
+                        <tr>
+                        <td>{{exam.name}}</td>
+                        <td>{{exam.question_paper.qPaperTitle}}</td>
+                        <td>{{exam.professor}}</td>
+                        <td>
+                            <a href="{% url 'result' exam.id  %}" class="btn btn-sm btn-info">Result</a>
+                        </tr>
+                    </tbody>
+                <input type="hidden" value="{{ exam }}" name="paper">
+            {% endfor %}
+            </table>
+        {% else %}
+            <div class="jumbotron col-md-8 text-center bg-success">
+                NO EXAMS
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
+</body>
+</html>

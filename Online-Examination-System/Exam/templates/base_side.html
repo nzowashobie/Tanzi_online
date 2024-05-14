@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <!-- Bootstrap CSS -->
+       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+       <!-- Font Awesome CSS for icons -->
+       <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for sidebar */
+         /* Custom styles for sidebar */
+         .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1000;
+            width: 250px;
+            padding-top: 3.5rem; /* Adjust based on navbar height */
+            background-color: #343a40; /* Bootstrap dark background color */
+            color: #fff; /* Light text color */
+            transition: all 0.3s;
+            transform: translateX(-250px); /* Initially hidden */
+        }
+
+        .sidebar.active {
+            transform: translateX(0); /* Show sidebar */
+        }
+
+        .sidebar .nav-link {
+            color: #fff;
+        }
+
+        .main-content {
+            transition: all 0.3s;
+            margin-left: 0; /* Adjusted for collapsed sidebar */
+            padding-top: 3.5rem; /* Adjust based on navbar height */
+        }
+
+        .navbar-toggler {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1001; /* Ensure it's above the sidebar */
+        }
+
+        @media (min-width: 768px) {
+            .main-content {
+                margin-left: 250px; /* Same as sidebar width */
+            }
+        }
+
+    </style>
+</head>
+<body>
+    {% include 'base.html' %}
+   
+    <button class="navbar-toggler" type="button" onclick="toggleSidebar()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="sidebar">
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="#"><i class="fas fa-home mr-2"></i> Home</a>
+            <a class="nav-link" href="#"><i class="fas fa-user mr-2"></i> Profile</a>
+            <a class="nav-link" href="#"><i class="fas fa-envelope mr-2"></i> Messages</a>
+            <a class="nav-link" href="#"><i class="fas fa-cog mr-2"></i> Settings</a>
+        </nav>
+    </div>
+    <div class="main-content">
+      
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Welcome to My Page</h1>
+                    <p>This is a responsive page created using Bootstrap.</p>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Card 1</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                        <form method="POST" action="{% url 'view_exams' %}">
+                            <div class="container">
+                                {% csrf_token %}
+                                {{examform.as_p}}
+                            </div>
+                            <div class="text-center">
+                            <button class= "btn"type="submit" style="border-color:#745959; color:#745959;">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap JS (optional) -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            function toggleSidebar() {
+                document.querySelector('.sidebar').classList.toggle('active');
+            }
+        </script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

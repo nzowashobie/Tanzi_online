@@ -1,0 +1,164 @@
+{% extends 'baes_faculty.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Topnav with sidebar</title>
+
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<!-- Import bootstrap cdn -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"crossorigin="anonymous">
+	<!-- Import jquery cdn -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"crossorigin="anonymous">
+	</script>
+	<!-- Import popper.js cdn -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"crossorigin="anonymous">
+	</script>
+	<!-- Import javascript cdn -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"crossorigin="anonymous">
+
+	</script>
+
+	 <!-- Bootstrap CSS -->
+	 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	 <!-- Font Awesome CSS for icons -->
+	 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+	<!-- CSS stylesheet -->
+	<style type="text/css">
+		html,
+		body {
+			height: 100%;
+		}
+		#green {
+			height: 100%;
+			background: black;
+			text-align: center;
+			color: white;
+			padding: 15px;
+		}
+    #form-set {
+        top: 50%;
+        left: 50%;
+        width: 15em;
+        height: 20em;
+        transform: translate(-50%, -50%);
+        border: 1px solid #666;
+        background-color: #b9faac;
+        position: fixed;
+      }
+
+   
+
+	     /* Custom styles for sidebar */
+		 .sidebar {
+            background-color: #343a40; /* Bootstrap dark background color */
+            color: #fff; /* Light text color */
+            height: 100vh; /* Full height */
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            padding-top: 3.5rem; /* Adjust based on navbar height */
+            z-index: 1;
+            transition: all 0.3s;
+            width: 250px; /* Sidebar width */
+        }
+
+        .sidebar .nav-link {
+            color: #fff;
+        }
+
+        .main-content {
+            margin-left: 250px; /* Same as sidebar width */
+            transition: all 0.3s;
+            padding-top: 0rem; /* Adjust based on navbar height */
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+	</style>
+</head>
+<body>
+    
+	<div class="sidebar">
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="{% url 'faculty-index' %}"><i class="fas fa-home mr-2"></i> Dashboard</a>
+            <a class="nav-link" href="#"><i class="fas fa-user mr-2"></i> Profile</a>
+            <a class="nav-link" href="{% url 'view_exams' %}"><i class="fas fa-envelope mr-2"></i> Exam type</a>
+            <a class="nav-link" href="#"><i class="fas fa-cog mr-2"></i> Settings</a>
+        </nav>
+    </div>
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="toggleSidebar()">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'faculty-index' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'select_grade' %}">Grade</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Settings</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Welcome to Tanzimark</h1>
+                    <p>This is a Part.. you get to select the grade.</p>
+                </div>
+            </div>
+           
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Notice</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+	
+				<div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Assign Test to Students</h4>
+                            <h4>Grade: {{ grade.grade_name }}</h4>
+                            <h4>Subject: {{ subject.subject_name }}</h4>
+                         
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <div class="text-center">
+                                    <div class="cont" id="form-button">
+                                        <button  class="btn btn-success"type="submit">Assign Test</button>
+                                      </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
+</body>
+</html>
+
